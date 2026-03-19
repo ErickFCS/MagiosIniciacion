@@ -17,7 +17,7 @@ void mensaje_bienvenida() {
 void preguntar_fundador(int *puntaje) {
   char eleccion = 0;
   int intentos = 3;
-  bool termino = 0;
+  bool termino = false;
   while (!termino) {
     if (intentos > 0) {
       printf("\n");
@@ -38,7 +38,7 @@ void preguntar_fundador(int *puntaje) {
       if (eleccion == 'J' || eleccion == 'A' || eleccion == 'S' || eleccion == 'B') {
         if (eleccion == 'J') {
           *puntaje += 100;
-          termino = 1;
+          termino = true;
         } else {
           *puntaje -= 20;
           printf("\x1b[91mLa opción %c no es la correcta. Intente nuevamente\x1b[0m\n", eleccion);
@@ -49,14 +49,15 @@ void preguntar_fundador(int *puntaje) {
       }
     } else {
       printf("-RECHAZADO-\n");
-      termino = 1;
+      termino = true;
     }
   }
 }
 
 void preguntar_voto_de_silencio(int *puntaje) {
   char eleccion = 0;
-  bool termino = 0;
+  bool acepto = false;
+  bool termino = false;
   while (!termino) {
     printf("\n");
     printf("\x1b[93mIngrese solo la letra entre [] de su opción elegida\x1b[0m\n");
@@ -70,11 +71,13 @@ void preguntar_voto_de_silencio(int *puntaje) {
     scanf(" %c", &eleccion);
     printf("\n");
     if (eleccion == 'S') {
-      *puntaje += 50;
-      termino = 1;
+      acepto = true;
+      *puntaje += 50 * acepto; // Solo lo uso para que no me tire la warning
+      termino = true;
     } else if (eleccion == 'N') {
+      acepto = false;
       *puntaje += -300;
-      termino = 1;
+      termino = true;
     } else {
       printf("\x1b[91mLa opción: %c no está entre las válidas. Intente nuevamente\x1b[0m\n", eleccion);
     }
@@ -87,7 +90,7 @@ void preguntar_nacimiento(int *puntaje) {
   int valor_yyyy = -1;
   int valor_mm = -1;
   int edad = -1;
-  bool termino = 0;
+  bool termino = false;
   while (!termino) {
     printf("\n");
     printf("\x1b[93mIngrese la fecha en formato yyyy/mm\x1b[0m\n");
@@ -107,7 +110,7 @@ void preguntar_nacimiento(int *puntaje) {
       if (edad < 18) {
         printf("-RECHAZADO-\n");
       }
-      termino = 1;
+      termino = true;
     } else {
       printf("\x1b[91mLa fecha: %d/%d no es válida. Intente nuevamente\x1b[0m\n", valor_yyyy, valor_mm);
     }
@@ -116,7 +119,7 @@ void preguntar_nacimiento(int *puntaje) {
 
 void preguntar_sacrificio(int *puntaje) {
   int eleccion = 0;
-  bool termino = 0;
+  bool termino = false;
   while (!termino) {
     printf("\n");
     printf("\x1b[93mIngrese un solo número entero entre 0 y 12 inclusive\x1b[0m\n");
@@ -130,19 +133,19 @@ void preguntar_sacrificio(int *puntaje) {
       printf("\x1b[91mEl valor: %d no es válido. Intente nuevamente\x1b[0m\n", eleccion);
     } else if (eleccion == 0) {
       *puntaje += -100;
-      termino = 1;
+      termino = true;
     } else if (eleccion <= 3) {
       *puntaje += 10;
-      termino = 1;
+      termino = true;
     } else if (eleccion <= 6) {
       *puntaje += 40;
-      termino = 1;
+      termino = true;
     } else if (eleccion <= 9) {
       *puntaje += 70;
-      termino = 1;
+      termino = true;
     } else if (eleccion <= 12) {
       *puntaje += 120;
-      termino = 1;
+      termino = true;
     }
   }
 }
