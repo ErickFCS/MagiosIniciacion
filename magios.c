@@ -101,7 +101,7 @@ void preguntar_nacimiento(int *puntaje) {
     printf("Ïngrese la fecha \x1b[94m(yyyy/mm)\x1b[0m aquí: ");
     scanf(" %d/%d", &valor_yyyy, &valor_mm);
     printf("\n");
-    if (valor_mm >= 1 && valor_mm <= 12 && (valor_yyyy > 1926 || (valor_yyyy == 1926 && valor_mm > 3))) {
+    if (valor_mm >= 1 && valor_mm <= 12 && (valor_yyyy > 1926 || (valor_yyyy == 1926 && valor_mm > 3)) && (valor_yyyy < 2026 || (valor_yyyy == 2026 && valor_mm <= 3))) {
       edad = VALOR_YYYY_ACTUAL - valor_yyyy + ((VALOR_MM_ACTUAL - valor_mm) >= 0);
       if (edad < 18) {
         printf("-RECHAZADO-\n");
