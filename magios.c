@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 #define MAX_VECTOR_RESULTADO 16
 
@@ -16,7 +17,7 @@ void mensaje_bienvenida() {
 void preguntar_fundador(int *puntaje) {
   char eleccion = 0;
   int intentos = 3;
-  char termino = 0;
+  bool termino = 0;
   while (!termino) {
     if (intentos > 0) {
       printf("\n");
@@ -55,7 +56,7 @@ void preguntar_fundador(int *puntaje) {
 
 void preguntar_voto_de_silencio(int *puntaje) {
   char eleccion = 0;
-  char termino = 0;
+  bool termino = 0;
   while (!termino) {
     printf("\n");
     printf("\x1b[93mIngrese solo la letra entre [] de su opción elegida\x1b[0m\n");
@@ -86,7 +87,7 @@ void preguntar_nacimiento(int *puntaje) {
   int valor_yyyy = -1;
   int valor_mm = -1;
   int edad = -1;
-  char termino = 0;
+  bool termino = 0;
   while (!termino) {
     printf("\n");
     printf("\x1b[93mIngrese la fecha en formato yyyy/mm\x1b[0m\n");
@@ -115,7 +116,7 @@ void preguntar_nacimiento(int *puntaje) {
 
 void preguntar_sacrificio(int *puntaje) {
   int eleccion = 0;
-  char termino = 0;
+  bool termino = 0;
   while (!termino) {
     printf("\n");
     printf("\x1b[93mIngrese un solo número entero entre 0 y 12 inclusive\x1b[0m\n");
