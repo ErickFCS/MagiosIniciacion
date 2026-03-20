@@ -183,44 +183,38 @@ void preguntar_sacrificio(int *puntaje) {
 }
 
 /*
- * PRE: Tener un array/string/vector en donde se quiera mover un literal string
- * POS: El array/string/vector ahora contiene el literal string + un \0 (null) al final
- */
-void mi_strcpy(char *destino, const char *origen) {
-  int indice_actual = 0;
-  while (origen[indice_actual] != '\0') {
-    destino[indice_actual] = origen[indice_actual];
-    indice_actual++;
-  }
-}
-
-/*
  * PRE: Tener el puntaje que se quiere evaluar y el array/string/vector en donde se quiere almacenar el resultado
  * POS: El array/string/vector ahora contiene el literal string del resultado
  */
-void obtener_resultado(int puntaje, char *resultado) {
-  if (puntaje < 0) {
-    mi_strcpy(resultado, "-RECHAZADO-");
-  } else if (puntaje <= 150) {
-    mi_strcpy(resultado, "-ASPIRANTE-");
-  } else if (puntaje <= 250) {
-    mi_strcpy(resultado, "-MAGIO NOVATO-");
-  } else if (puntaje <= 349) {
-    mi_strcpy(resultado, "-MAGIO-");
-  } else {
-    mi_strcpy(resultado, "-LIDER SUPREMO-");
-  }
+int numero_de_resultado(int puntaje) {
+  int numero_de_resultado = 0;
+  if (puntaje >= 350) {
+    numero_de_resultado = 4;
+  } else if (puntaje > 250) {
+    numero_de_resultado = 3;
+  } else if (puntaje > 150) {
+    numero_de_resultado = 2;
+  } else if (puntaje > 0) {
+    numero_de_resultado = 1;
+  } // Si no ha entrado en ningún caso, entonces el puntaje debe ser menor a 0
+  return numero_de_resultado;
 }
 
 int main() {
+  const char RESULTADOS[][MAX_VECTOR_RESULTADO] = {
+      "-RECHAZADO-",
+      "-ASPIRANTE-",
+      "-MAGIO NOVATO-",
+      "-MAGIO-",
+      "-LIDER SUPREMO-",
+  };
+
   int puntaje = 0;
-  char resultado[MAX_VECTOR_RESULTADO] = {0};
   mensaje_bienvenida();
   preguntar_fundador(&puntaje);
   preguntar_voto_de_silencio(&puntaje);
   preguntar_nacimiento(&puntaje);
   preguntar_sacrificio(&puntaje);
-  obtener_resultado(puntaje, resultado);
   printf("\n");
   printf("--------------------------------------------------\n");
   printf("\n");
@@ -228,6 +222,6 @@ int main() {
   printf("\n");
   printf("\x1b[93mSeras...\x1b[0m\n");
   printf("\n");
-  printf("%s\n", resultado);
+  printf("%s\n", RESULTADOS[numero_de_resultado(puntaje)]);
   return 0;
 }
