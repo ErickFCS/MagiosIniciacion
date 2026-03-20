@@ -1,0 +1,34 @@
+---
+# Specific to C/C++ development
+Language: Cpp
+BasedOnStyle: LLVM
+
+# --- Line Breaking & Columns ---
+# Setting this to 0 disables the "hard wrap" feature entirely.
+ColumnLimit: 0
+
+# Ensures that even if you have long comments, clang-format won't split them.
+CommentPragmas: '^ IWYU pragma:'
+ReflowComments: false
+
+# --- Indentation & Spacing ---
+# Standard 4-space indent (common for modern C)
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+
+# --- Aesthetics ---
+# Keeps simple functions on one line if you wrote them that way
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: true
+AllowShortLoopsOnASingleLine: true
+
+# Alignment settings for better readability
+AlignAfterOpenBracket: Align
+AlignOperands: true
+AlignTrailingComments: true
+
+# --- Braces ---
+# Use Attach for "K&R" style or Allman for "Braces on new line"
+BreakBeforeBraces: Attach
+---
