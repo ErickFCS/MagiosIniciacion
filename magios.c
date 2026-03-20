@@ -7,7 +7,7 @@
  * PRE: -
  * POS: Mensaje de bienvenida mostrado al usuario
  */
-void mensaje_bienvenida() {
+void mostrar_mensaje_de_bienvenida() {
   printf("--------------------------------------------------\n");
   printf("\n");
   printf("¡HOLA ASPIRANTE! ¿Listo para rendir tu iniciación?\n");
@@ -22,7 +22,7 @@ void mensaje_bienvenida() {
  * PRE: Tener una variable en donde se quiera almacenar el puntaje obtenido
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
-void preguntar_fundador(int *puntaje) {
+void preguntar_fundador(int *puntaje, bool *rechazado) {
   const int PUNTAJE_SI_ACIERTA = 100;
   const int PUNTAJE_SI_ERRA = -20;
   const int CANTIDAD_MAXIMA_DE_INTENTOS = 3;
@@ -61,6 +61,8 @@ void preguntar_fundador(int *puntaje) {
       }
     } else {
       printf("-RECHAZADO-\n");
+      *rechazado = true;
+      *puntaje = -1;
       termino = true;
     }
   }
@@ -107,7 +109,7 @@ void preguntar_voto_de_silencio(int *puntaje) {
  * PRE: Tener una variable en donde se quiera almacenar el puntaje obtenido
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
-void preguntar_nacimiento(int *puntaje) {
+void preguntar_nacimiento(int *puntaje, bool *rechazado) {
   const int MULTIPLICADOR_PARA_PUNTAJE = 2;
 
   const int VALOR_YYYY_ACTUAL = 2026;
@@ -135,6 +137,8 @@ void preguntar_nacimiento(int *puntaje) {
       edad = VALOR_YYYY_ACTUAL - valor_yyyy + ((VALOR_MM_ACTUAL - valor_mm) >= 0);
       if (edad < 18) {
         printf("-RECHAZADO-\n");
+        *rechazado = true;
+        *puntaje = -1;
       } else {
         *puntaje += edad * MULTIPLICADOR_PARA_PUNTAJE;
       }
@@ -150,18 +154,21 @@ void preguntar_nacimiento(int *puntaje) {
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
 void preguntar_sacrificio(int *puntaje) {
+  const int MINIMA_ELECCION_VALIDA = 0;
+  const int MAXIMA_ELECCION_VALIDA = 12;
+
   int eleccion = 0;
   bool termino = false;
   while (!termino) {
     printf("\n");
-    printf("\x1b[93mIngrese un solo número entero entre 0 y 12 inclusive\x1b[0m\n");
+    printf("\x1b[93mIngrese un solo número entero entre %d y %d inclusive\x1b[0m\n", MINIMA_ELECCION_VALIDA, MAXIMA_ELECCION_VALIDA);
     printf("\n");
     printf("¿Cuántas donas estaría dispuesto a sacrificar para el Número Uno?\n");
     printf("\n");
-    printf("Ingrese aquí su elección \x1b[94m(0-12)\x1b[0m: ");
+    printf("Ingrese aquí su elección \x1b[94m(%d-%d)\x1b[0m: ", MINIMA_ELECCION_VALIDA, MAXIMA_ELECCION_VALIDA);
     scanf(" %d", &eleccion);
     printf("\n");
-    if (eleccion < 0 || eleccion > 12) {
+    if (eleccion < MINIMA_ELECCION_VALIDA || eleccion > MAXIMA_ELECCION_VALIDA) {
       printf("\x1b[91mEl valor: %d no es válido. Intente nuevamente\x1b[0m\n", eleccion);
     } else if (eleccion == 0) {
       *puntaje += -100;
@@ -186,7 +193,7 @@ void preguntar_sacrificio(int *puntaje) {
  * PRE: Tener el puntaje que se quiere evaluar y el array/string/vector en donde se quiere almacenar el resultado
  * POS: El array/string/vector ahora contiene el literal string del resultado
  */
-int numero_de_resultado(int puntaje) {
+int indice_de_resultado(int puntaje) {
   int numero_de_resultado = 0;
   if (puntaje >= 350) {
     numero_de_resultado = 4;
@@ -210,11 +217,16 @@ int main() {
   };
 
   int puntaje = 0;
-  mensaje_bienvenida();
-  preguntar_fundador(&puntaje);
-  preguntar_voto_de_silencio(&puntaje);
-  preguntar_nacimiento(&puntaje);
-  preguntar_sacrificio(&puntaje);
+  bool rechazado = false;
+  mostrar_mensaje_de_bienvenida();
+  preguntar_fundador(&puntaje, &rechazado);
+  if (!rechazado) {
+    preguntar_voto_de_silencio(&puntaje);
+    preguntar_nacimiento(&puntaje, &rechazado);
+    if (!rechazado) {
+      preguntar_sacrificio(&puntaje);
+    }
+  }
   printf("\n");
   printf("--------------------------------------------------\n");
   printf("\n");
@@ -222,6 +234,6 @@ int main() {
   printf("\n");
   printf("\x1b[93mSeras...\x1b[0m\n");
   printf("\n");
-  printf("%s\n", RESULTADOS[numero_de_resultado(puntaje)]);
+  printf("%s\n", RESULTADOS[indice_de_resultado(puntaje)]);
   return 0;
 }
