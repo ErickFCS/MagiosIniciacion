@@ -1,0 +1,3 @@
+#!/bin/bash
+
+zip ./EFCS_ENTREGA_TP0.zip ./magios.c
