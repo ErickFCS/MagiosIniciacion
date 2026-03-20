@@ -52,7 +52,7 @@ void preguntar_fundador(int *puntaje, bool *rechazado) {
           *puntaje += PUNTAJE_SI_ACIERTA;
           termino = true;
         } else {
-          *puntaje -= PUNTAJE_SI_ERRA;
+          *puntaje += PUNTAJE_SI_ERRA;
           printf("\x1b[91mLa opción %c no es la correcta. Intente nuevamente\x1b[0m\n", eleccion);
           intentos_restantes--;
         }
@@ -134,7 +134,7 @@ void preguntar_nacimiento(int *puntaje, bool *rechazado) {
     scanf(" %d/%d", &valor_yyyy, &valor_mm);
     printf("\n");
     if (valor_mm >= 1 && valor_mm <= 12 && (valor_yyyy > 1926 || (valor_yyyy == 1926 && valor_mm > 3)) && (valor_yyyy < 2026 || (valor_yyyy == 2026 && valor_mm <= 3))) {
-      edad = VALOR_YYYY_ACTUAL - valor_yyyy + ((VALOR_MM_ACTUAL - valor_mm) >= 0);
+      edad = VALOR_YYYY_ACTUAL - valor_yyyy - ((VALOR_MM_ACTUAL - valor_mm) < 0);
       if (edad < 18) {
         printf("-RECHAZADO-\n");
         *rechazado = true;
