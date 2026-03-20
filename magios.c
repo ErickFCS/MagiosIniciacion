@@ -130,10 +130,10 @@ void preguntar_nacimiento(int *puntaje, bool *rechazado) {
     printf("\n");
     printf("¿Cuál es su fecha de nacimiento?\n");
     printf("\n");
-    printf("Ïngrese la fecha \x1b[94m(yyyy/mm)\x1b[0m aquí: ");
+    printf("Ingrese la fecha \x1b[94m(yyyy/mm)\x1b[0m aquí: ");
     scanf(" %d/%d", &valor_yyyy, &valor_mm);
     printf("\n");
-    if (valor_mm >= 1 && valor_mm <= 12 && (valor_yyyy > 1926 || (valor_yyyy == 1926 && valor_mm > 3)) && (valor_yyyy < 2026 || (valor_yyyy == 2026 && valor_mm <= 3))) {
+    if (valor_mm >= 1 && valor_mm <= 12 && (valor_yyyy > 1926 || (valor_yyyy == 1926 && valor_mm >= 3)) && (valor_yyyy < 2026 || (valor_yyyy == 2026 && valor_mm <= 3))) {
       edad = VALOR_YYYY_ACTUAL - valor_yyyy - ((VALOR_MM_ACTUAL - valor_mm) < 0);
       if (edad < 18) {
         printf("-RECHAZADO-\n");
@@ -194,17 +194,17 @@ void preguntar_sacrificio(int *puntaje) {
  * POS: El array/string/vector ahora contiene el literal string del resultado
  */
 int indice_de_resultado(int puntaje) {
-  int numero_de_resultado = 0;
+  int indice_de_resultado = 0;
   if (puntaje >= 350) {
-    numero_de_resultado = 4;
+    indice_de_resultado = 4;
   } else if (puntaje > 250) {
-    numero_de_resultado = 3;
+    indice_de_resultado = 3;
   } else if (puntaje > 150) {
-    numero_de_resultado = 2;
+    indice_de_resultado = 2;
   } else if (puntaje > 0) {
-    numero_de_resultado = 1;
+    indice_de_resultado = 1;
   } // Si no ha entrado en ningún caso, entonces el puntaje debe ser menor a 0
-  return numero_de_resultado;
+  return indice_de_resultado;
 }
 
 int main() {
@@ -232,7 +232,7 @@ int main() {
   printf("\n");
   printf("\x1b[92mLuego de una deliberada discusión...\x1b[0m\n");
   printf("\n");
-  printf("\x1b[93mSeras...\x1b[0m\n");
+  printf("\x1b[93mSerás...\x1b[0m\n");
   printf("\n");
   printf("%s\n", RESULTADOS[indice_de_resultado(puntaje)]);
   return 0;
