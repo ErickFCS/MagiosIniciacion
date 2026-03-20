@@ -23,13 +23,17 @@ void mensaje_bienvenida() {
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
 void preguntar_fundador(int *puntaje) {
+  const int PUNTAJE_SI_ACIERTA = 100;
+  const int PUNTAJE_SI_ERRA = -20;
+  const int CANTIDAD_MAXIMA_DE_INTENTOS = 3;
+
+  int intentos_restantes = CANTIDAD_MAXIMA_DE_INTENTOS;
   char eleccion = 0;
-  int intentos = 3;
   bool termino = false;
   while (!termino) {
-    if (intentos > 0) {
+    if (intentos_restantes > 0) {
       printf("\n");
-      printf("\x1b[93mNúmero de intentos restantes: %d\x1b[0m\n", intentos);
+      printf("\x1b[93mNúmero de intentos restantes: %d\x1b[0m\n", intentos_restantes);
       printf("\n");
       printf("\x1b[93mIngrese solo la letra entre [] de su opción elegida\x1b[0m\n");
       printf("\n");
@@ -45,12 +49,12 @@ void preguntar_fundador(int *puntaje) {
       printf("\n");
       if (eleccion == 'J' || eleccion == 'A' || eleccion == 'S' || eleccion == 'B') {
         if (eleccion == 'J') {
-          *puntaje += 100;
+          *puntaje += PUNTAJE_SI_ACIERTA;
           termino = true;
         } else {
-          *puntaje -= 20;
+          *puntaje -= PUNTAJE_SI_ERRA;
           printf("\x1b[91mLa opción %c no es la correcta. Intente nuevamente\x1b[0m\n", eleccion);
-          intentos--;
+          intentos_restantes--;
         }
       } else {
         printf("\x1b[91mLa opción: %c no está entre las válidas. Intente nuevamente\x1b[0m\n", eleccion);
@@ -67,6 +71,9 @@ void preguntar_fundador(int *puntaje) {
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
 void preguntar_voto_de_silencio(int *puntaje) {
+  const int PUNTAJE_SI_ACIERTA = 50;
+  const int PUNTAJE_SI_ERRA = -300;
+
   char eleccion = 0;
   bool acepto = false;
   bool termino = false;
@@ -84,11 +91,11 @@ void preguntar_voto_de_silencio(int *puntaje) {
     printf("\n");
     if (eleccion == 'S') {
       acepto = true;
-      *puntaje += 50 * acepto; // Solo lo uso para que no me tire la warning
+      *puntaje += PUNTAJE_SI_ACIERTA * acepto; // Solo lo uso para que no me tire la warning
       termino = true;
     } else if (eleccion == 'N') {
       acepto = false;
-      *puntaje += -300;
+      *puntaje += PUNTAJE_SI_ERRA;
       termino = true;
     } else {
       printf("\x1b[91mLa opción: %c no está entre las válidas. Intente nuevamente\x1b[0m\n", eleccion);
@@ -101,8 +108,11 @@ void preguntar_voto_de_silencio(int *puntaje) {
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
 void preguntar_nacimiento(int *puntaje) {
+  const int MULTIPLICADOR_PARA_PUNTAJE = 2;
+
   const int VALOR_YYYY_ACTUAL = 2026;
   const int VALOR_MM_ACTUAL = 3;
+
   int valor_yyyy = -1;
   int valor_mm = -1;
   int edad = -1;
