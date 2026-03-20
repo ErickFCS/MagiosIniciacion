@@ -125,6 +125,8 @@ void preguntar_nacimiento(int *puntaje) {
       edad = VALOR_YYYY_ACTUAL - valor_yyyy + ((VALOR_MM_ACTUAL - valor_mm) >= 0);
       if (edad < 18) {
         printf("-RECHAZADO-\n");
+      } else {
+        *puntaje += edad * MULTIPLICADOR_PARA_PUNTAJE;
       }
       termino = true;
     } else {
