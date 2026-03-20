@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#define MAX_VECTOR_RESULTADO 16
+#define MAX_VECTOR_RESULTADO 31
 
 /*
  * PRE: -
@@ -209,11 +209,11 @@ int indice_de_resultado(int puntaje) {
 
 int main() {
   const char RESULTADOS[][MAX_VECTOR_RESULTADO] = {
-      "-RECHAZADO-",
-      "-ASPIRANTE-",
-      "-MAGIO NOVATO-",
-      "-MAGIO-",
-      "-LIDER SUPREMO-",
+      "\x1b[91m-RECHAZADO-\x1b[0m",
+      "\x1b[93m-ASPIRANTE-\x1b[0m",
+      "\x1b[92m-MAGIO NOVATO-\x1b[0m",
+      "\x1b[96m-MAGIO-\x1b[0m",
+      "\x1b[95m-LIDER SUPREMO-\x1b[0m",
   };
 
   int puntaje = 0;
