@@ -1,8 +1,12 @@
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #define MAX_VECTOR_RESULTADO 16
 
+/*
+ * PRE: -
+ * POS: Mensaje de bienvenida mostrado al usuario
+ */
 void mensaje_bienvenida() {
   printf("--------------------------------------------------\n");
   printf("\n");
@@ -14,6 +18,10 @@ void mensaje_bienvenida() {
   printf("--------------------------------------------------\n");
 }
 
+/*
+ * PRE: Tener una variable en donde se quiera almacenar el puntaje obtenido
+ * POS: Puntaje obtenido sumado/restado a la variable pasada
+ */
 void preguntar_fundador(int *puntaje) {
   char eleccion = 0;
   int intentos = 3;
@@ -54,6 +62,10 @@ void preguntar_fundador(int *puntaje) {
   }
 }
 
+/*
+ * PRE: Tener una variable en donde se quiera almacenar el puntaje obtenido
+ * POS: Puntaje obtenido sumado/restado a la variable pasada
+ */
 void preguntar_voto_de_silencio(int *puntaje) {
   char eleccion = 0;
   bool acepto = false;
@@ -84,6 +96,10 @@ void preguntar_voto_de_silencio(int *puntaje) {
   }
 }
 
+/*
+ * PRE: Tener una variable en donde se quiera almacenar el puntaje obtenido
+ * POS: Puntaje obtenido sumado/restado a la variable pasada
+ */
 void preguntar_nacimiento(int *puntaje) {
   const int VALOR_YYYY_ACTUAL = 2026;
   const int VALOR_MM_ACTUAL = 3;
@@ -117,6 +133,10 @@ void preguntar_nacimiento(int *puntaje) {
   }
 }
 
+/*
+ * PRE: Tener una variable en donde se quiera almacenar el puntaje obtenido
+ * POS: Puntaje obtenido sumado/restado a la variable pasada
+ */
 void preguntar_sacrificio(int *puntaje) {
   int eleccion = 0;
   bool termino = false;
@@ -150,6 +170,10 @@ void preguntar_sacrificio(int *puntaje) {
   }
 }
 
+/*
+ * PRE: Tener un array/string/vector en donde se quiera mover un literal string
+ * POS: El array/string/vector ahora contiene el literal string + un \0 (null) al final
+ */
 void mi_strcpy(char *destino, const char *origen) {
   int indice_actual = 0;
   while (origen[indice_actual] != '\0') {
@@ -158,6 +182,10 @@ void mi_strcpy(char *destino, const char *origen) {
   }
 }
 
+/*
+ * PRE: Tener el puntaje que se quiere evaluar y el array/string/vector en donde se quiere almacenar el resultado
+ * POS: El array/string/vector ahora contiene el literal string del resultado
+ */
 void obtener_resultado(int puntaje, char *resultado) {
   if (puntaje < 0) {
     mi_strcpy(resultado, "-RECHAZADO-");
