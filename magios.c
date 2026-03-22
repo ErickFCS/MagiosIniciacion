@@ -199,7 +199,7 @@ int indice_de_resultado(int puntaje) {
     indice_de_resultado = 3;
   } else if (puntaje > 150) {
     indice_de_resultado = 2;
-  } else if (puntaje > 0) {
+  } else if (puntaje >= 0) {
     indice_de_resultado = 1;
   } // Si no ha entrado en ningún caso, entonces el puntaje debe ser menor a 0
   return indice_de_resultado;
