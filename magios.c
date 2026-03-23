@@ -114,8 +114,8 @@ void preguntar_nacimiento(int *puntaje, bool *rechazado) {
   const int VALOR_YYYY_ACTUAL = 2026;
   const int VALOR_MM_ACTUAL = 3;
 
-  int valor_yyyy = -1;
-  int valor_mm = -1;
+  int valor_yyyy = 0;
+  int valor_mm = 0;
   int edad = -1;
   bool termino = false;
   while (!termino) {
