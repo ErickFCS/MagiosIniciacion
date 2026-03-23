@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #define MAX_VECTOR_RESULTADO 31
+#define MAX_VECTOR_OPCIONES_PREGUNTA_FUNDADOR 4
 
 /*
  * PRE: -
@@ -22,10 +23,34 @@ void mostrar_mensaje_de_bienvenida() {
 }
 
 /*
+ * PRE: Tener un valor a buscar, una lista con valores en la cual buscar, y tener el tope de esa lista
+ * POS: Retorna true si, y solo si el valor buscado se encuentra en la lista
+ */
+bool esta_entre(char valor_buscado, const char lista[], int tope_lista) {
+  bool se_encontro = false;
+  int indice_actual = 0;
+  while (!se_encontro && indice_actual < tope_lista) {
+    if (valor_buscado == lista[indice_actual])
+      se_encontro = true;
+    indice_actual++;
+  }
+
+  return se_encontro;
+}
+
+/*
  * PRE: Tener una variable en donde se quiera almacenar el puntaje obtenido
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
 void preguntar_fundador(int *puntaje, bool *rechazado) {
+  const char OPCIONES_SOLO_LETRA[MAX_VECTOR_OPCIONES_PREGUNTA_FUNDADOR] = {
+      'J',
+      'A',
+      'S',
+      'B',
+  };
+  const char OPCION_CORRECTA = OPCIONES_SOLO_LETRA[0];
+
   const char MENSAJE_DE_PREGUNTA[] =
       "\n"
       "\x1b[93mNúmero de intentos restantes: %d\x1b[0m\n"
@@ -56,8 +81,8 @@ void preguntar_fundador(int *puntaje, bool *rechazado) {
       printf(PEDIDO_DE_ENTRADA);
       scanf(" %c", &eleccion);
       printf("\n");
-      if (eleccion == 'J' || eleccion == 'A' || eleccion == 'S' || eleccion == 'B') {
-        if (eleccion == 'J') {
+      if (esta_entre(eleccion, OPCIONES_SOLO_LETRA, MAX_VECTOR_OPCIONES_PREGUNTA_FUNDADOR)) {
+        if (eleccion == OPCION_CORRECTA) {
           *puntaje += PUNTAJE_SI_ACIERTA;
           termino = true;
         } else {
@@ -81,6 +106,9 @@ void preguntar_fundador(int *puntaje, bool *rechazado) {
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
 void preguntar_voto_de_silencio(int *puntaje) {
+  const char OPCION_CORRECTA = 'S';
+  const char OPCION_INCORRECTA = 'N';
+
   const char MENSAJE_DE_PREGUNTA[] =
       "\n"
       "\x1b[93mIngrese solo la letra entre [] de su opción elegida\x1b[0m\n"
@@ -96,7 +124,7 @@ void preguntar_voto_de_silencio(int *puntaje) {
   const int PUNTAJE_SI_ACIERTA = 50;
   const int PUNTAJE_SI_ERRA = -300;
 
-  char eleccion = 0;
+  char eleccion = '\0';
   bool acepto = false;
   bool termino = false;
   while (!termino) {
@@ -104,11 +132,11 @@ void preguntar_voto_de_silencio(int *puntaje) {
     printf(PEDIDO_DE_ENTRADA);
     scanf(" %c", &eleccion);
     printf("\n");
-    if (eleccion == 'S') {
+    if (eleccion == OPCION_CORRECTA) {
       acepto = true;
       *puntaje += PUNTAJE_SI_ACIERTA * acepto; // Solo lo uso para que no me tire la warning
       termino = true;
-    } else if (eleccion == 'N') {
+    } else if (eleccion == OPCION_INCORRECTA) {
       acepto = false;
       *puntaje += PUNTAJE_SI_ERRA;
       termino = true;
@@ -128,9 +156,9 @@ void preguntar_nacimiento(int *puntaje, bool *rechazado) {
       "\x1b[93mIngrese la fecha en formato yyyy/mm\x1b[0m\n"
       "\x1b[93mSiendo yyyy el año, y mm, el mes\x1b[0m\n"
       "\x1b[93mLa fecha ingresada debe ser:\x1b[0m\n"
-      "\t\x1b[93mPosterior a 1926/3\x1b[0m\n"
+      "\t\x1b[93mPosterior a %d/%d\x1b[0m\n"
       "\t\x1b[93my\x1b[0m\n"
-      "\t\x1b[93mAnterior a 2026/3\x1b[0m\n"
+      "\t\x1b[93mAnterior a %d/%d\x1b[0m\n"
       "\n"
       "¿Cuál es su fecha de nacimiento?\n"
       "\n";
@@ -141,6 +169,8 @@ void preguntar_nacimiento(int *puntaje, bool *rechazado) {
 
   const int VALOR_YYYY_ACTUAL = 2026;
   const int VALOR_MM_ACTUAL = 3;
+  const int VALOR_YYYY_MINIMO = 1926;
+  const int VALOR_MM_MINIMO = 3;
 
   const int EDAD_MINIMA = 18;
 
@@ -149,14 +179,14 @@ void preguntar_nacimiento(int *puntaje, bool *rechazado) {
   int edad = -1;
   bool termino = false;
   while (!termino) {
-    printf(MENSAJE_DE_PREGUNTA);
+    printf(MENSAJE_DE_PREGUNTA, VALOR_YYYY_MINIMO, VALOR_MM_MINIMO, VALOR_YYYY_ACTUAL, VALOR_MM_ACTUAL);
     printf(PEDIDO_DE_ENTRADA);
     scanf(" %d/%d", &valor_yyyy, &valor_mm);
     printf("\n");
     if (valor_mm >= 1 &&
         valor_mm <= 12 &&
-        (valor_yyyy > 1926 || (valor_yyyy == 1926 && valor_mm >= 3)) &&
-        (valor_yyyy < 2026 || (valor_yyyy == 2026 && valor_mm <= 3))) {
+        (valor_yyyy > VALOR_YYYY_MINIMO || (valor_yyyy == VALOR_YYYY_MINIMO && valor_mm >= VALOR_MM_MINIMO)) &&
+        (valor_yyyy < VALOR_YYYY_ACTUAL || (valor_yyyy == VALOR_YYYY_ACTUAL && valor_mm <= VALOR_MM_ACTUAL))) {
       edad = VALOR_YYYY_ACTUAL - valor_yyyy - ((VALOR_MM_ACTUAL - valor_mm) < 0);
       if (edad < EDAD_MINIMA) {
         *rechazado = true;
