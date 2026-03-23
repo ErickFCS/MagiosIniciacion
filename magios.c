@@ -8,14 +8,17 @@
  * POS: Mensaje de bienvenida mostrado al usuario
  */
 void mostrar_mensaje_de_bienvenida() {
-  printf("--------------------------------------------------\n");
-  printf("\n");
-  printf("¡HOLA ASPIRANTE! ¿Listo para rendir tu iniciación?\n");
-  printf("\n");
-  printf("Responde a las siguientes preguntas y descubre si\n");
-  printf("tienes lo necesario para ser un \x1b[97mMAGIO\x1b[0m\n");
-  printf("\n");
-  printf("--------------------------------------------------\n");
+  const char MENSAJE_DE_BIENVENIDA[] =
+      "--------------------------------------------------\n"
+      "\n"
+      "¡HOLA ASPIRANTE! ¿Listo para rendir tu iniciación?\n"
+      "\n"
+      "Responde a las siguientes preguntas y descubre si\n"
+      "tienes lo necesario para ser un \x1b[97mMAGIO\x1b[0m\n"
+      "\n"
+      "--------------------------------------------------\n";
+
+  printf(MENSAJE_DE_BIENVENIDA);
 }
 
 /*
@@ -23,6 +26,23 @@ void mostrar_mensaje_de_bienvenida() {
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
 void preguntar_fundador(int *puntaje, bool *rechazado) {
+  const char MENSAJE_DE_PREGUNTA[] =
+      "\n"
+      "\x1b[93mNúmero de intentos restantes: %d\x1b[0m\n"
+      "\n"
+      "\x1b[93mIngrese solo la letra entre [] de su opción elegida\x1b[0m\n"
+      "\n"
+      "¿Quién fundó realmente Springfield?\n"
+      "\n"
+      "\t\x1b[94m[J]\x1b[0m Jebediah Springfield\n"
+      "\t\x1b[94m[A]\x1b[0m Los aliens\n"
+      "\t\x1b[94m[S]\x1b[0m Los Magios\n"
+      "\t\x1b[94m[B]\x1b[0m Sr. Burns\n"
+      "\n";
+  const char PEDIDO_DE_ENTRADA[] = "Ingrese aquí su elección: ";
+  const char MENSAJE_ERROR_OPCION_INCORRECTA[] = "\x1b[91mLa opción %c no es la correcta. Intente nuevamente\x1b[0m\n";
+  const char MENSAJE_ERROR_OPCION_INVALIDA[] = "\x1b[91mLa opción: %c no está entre las válidas. Intente nuevamente\x1b[0m\n";
+
   const int PUNTAJE_SI_ACIERTA = 100;
   const int PUNTAJE_SI_ERRA = -20;
   const int CANTIDAD_MAXIMA_DE_INTENTOS = 3;
@@ -32,19 +52,8 @@ void preguntar_fundador(int *puntaje, bool *rechazado) {
   bool termino = false;
   while (!termino) {
     if (intentos_restantes > 0) {
-      printf("\n");
-      printf("\x1b[93mNúmero de intentos restantes: %d\x1b[0m\n", intentos_restantes);
-      printf("\n");
-      printf("\x1b[93mIngrese solo la letra entre [] de su opción elegida\x1b[0m\n");
-      printf("\n");
-      printf("¿Quién fundó realmente Springfield?\n");
-      printf("\n");
-      printf("\t\x1b[94m[J]\x1b[0m Jebediah Springfield\n");
-      printf("\t\x1b[94m[A]\x1b[0m Los aliens\n");
-      printf("\t\x1b[94m[S]\x1b[0m Los Magios\n");
-      printf("\t\x1b[94m[B]\x1b[0m Sr. Burns\n");
-      printf("\n");
-      printf("Ingrese aquí su elección: ");
+      printf(MENSAJE_DE_PREGUNTA, intentos_restantes);
+      printf(PEDIDO_DE_ENTRADA);
       scanf(" %c", &eleccion);
       printf("\n");
       if (eleccion == 'J' || eleccion == 'A' || eleccion == 'S' || eleccion == 'B') {
@@ -53,11 +62,11 @@ void preguntar_fundador(int *puntaje, bool *rechazado) {
           termino = true;
         } else {
           *puntaje += PUNTAJE_SI_ERRA;
-          printf("\x1b[91mLa opción %c no es la correcta. Intente nuevamente\x1b[0m\n", eleccion);
+          printf(MENSAJE_ERROR_OPCION_INCORRECTA, eleccion);
           intentos_restantes--;
         }
       } else {
-        printf("\x1b[91mLa opción: %c no está entre las válidas. Intente nuevamente\x1b[0m\n", eleccion);
+        printf(MENSAJE_ERROR_OPCION_INVALIDA, eleccion);
       }
     } else {
       *rechazado = true;
@@ -72,6 +81,18 @@ void preguntar_fundador(int *puntaje, bool *rechazado) {
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
 void preguntar_voto_de_silencio(int *puntaje) {
+  const char MENSAJE_DE_PREGUNTA[] =
+      "\n"
+      "\x1b[93mIngrese solo la letra entre [] de su opción elegida\x1b[0m\n"
+      "\n"
+      "¿Promete mantener en secreto la existencia de los Magios?\n"
+      "\n"
+      "\t\x1b[94m[S]\x1b[0m Sí\n"
+      "\t\x1b[94m[N]\x1b[0m No\n"
+      "\n";
+  const char PEDIDO_DE_ENTRADA[] = "Ingrese aquí su elección: ";
+  const char MENSAJE_ERROR_OPCION_INVALIDA[] = "\x1b[91mLa opción: %c no está entre las válidas. Intente nuevamente\x1b[0m\n";
+
   const int PUNTAJE_SI_ACIERTA = 50;
   const int PUNTAJE_SI_ERRA = -300;
 
@@ -79,15 +100,8 @@ void preguntar_voto_de_silencio(int *puntaje) {
   bool acepto = false;
   bool termino = false;
   while (!termino) {
-    printf("\n");
-    printf("\x1b[93mIngrese solo la letra entre [] de su opción elegida\x1b[0m\n");
-    printf("\n");
-    printf("¿Promete mantener en secreto la existencia de los Magios?\n");
-    printf("\n");
-    printf("\t\x1b[94m[S]\x1b[0m Sí\n");
-    printf("\t\x1b[94m[N]\x1b[0m No\n");
-    printf("\n");
-    printf("Ingrese aquí su elección: ");
+    printf(MENSAJE_DE_PREGUNTA);
+    printf(PEDIDO_DE_ENTRADA);
     scanf(" %c", &eleccion);
     printf("\n");
     if (eleccion == 'S') {
@@ -99,7 +113,7 @@ void preguntar_voto_de_silencio(int *puntaje) {
       *puntaje += PUNTAJE_SI_ERRA;
       termino = true;
     } else {
-      printf("\x1b[91mLa opción: %c no está entre las válidas. Intente nuevamente\x1b[0m\n", eleccion);
+      printf(MENSAJE_ERROR_OPCION_INVALIDA, eleccion);
     }
   }
 }
@@ -109,32 +123,42 @@ void preguntar_voto_de_silencio(int *puntaje) {
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
 void preguntar_nacimiento(int *puntaje, bool *rechazado) {
+  const char MENSAJE_DE_PREGUNTA[] =
+      "\n"
+      "\x1b[93mIngrese la fecha en formato yyyy/mm\x1b[0m\n"
+      "\x1b[93mSiendo yyyy el año, y mm, el mes\x1b[0m\n"
+      "\x1b[93mLa fecha ingresada debe ser:\x1b[0m\n"
+      "\t\x1b[93mPosterior a 1926/3\x1b[0m\n"
+      "\t\x1b[93my\x1b[0m\n"
+      "\t\x1b[93mAnterior a 2026/3\x1b[0m\n"
+      "\n"
+      "¿Cuál es su fecha de nacimiento?\n"
+      "\n";
+  const char PEDIDO_DE_ENTRADA[] = "Ingrese la fecha \x1b[94m(yyyy/mm)\x1b[0m aquí: ";
+  const char MENSAJE_ERROR_OPCION_INVALIDA[] = "\x1b[91mLa fecha: %d/%d no es válida. Intente nuevamente\x1b[0m\n";
+
   const int MULTIPLICADOR_PARA_PUNTAJE = 2;
 
   const int VALOR_YYYY_ACTUAL = 2026;
   const int VALOR_MM_ACTUAL = 3;
+
+  const int EDAD_MINIMA = 18;
 
   int valor_yyyy = 0;
   int valor_mm = 0;
   int edad = -1;
   bool termino = false;
   while (!termino) {
-    printf("\n");
-    printf("\x1b[93mIngrese la fecha en formato yyyy/mm\x1b[0m\n");
-    printf("\x1b[93mSiendo yyyy el año, y mm, el mes\x1b[0m\n");
-    printf("\x1b[93mLa fecha ingresada debe ser:\x1b[0m\n");
-    printf("\t\x1b[93mPosterior a 1926/3\x1b[0m\n");
-    printf("\t\x1b[93my\x1b[0m\n");
-    printf("\t\x1b[93mAnterior a 2026/3\x1b[0m\n");
-    printf("\n");
-    printf("¿Cuál es su fecha de nacimiento?\n");
-    printf("\n");
-    printf("Ingrese la fecha \x1b[94m(yyyy/mm)\x1b[0m aquí: ");
+    printf(MENSAJE_DE_PREGUNTA);
+    printf(PEDIDO_DE_ENTRADA);
     scanf(" %d/%d", &valor_yyyy, &valor_mm);
     printf("\n");
-    if (valor_mm >= 1 && valor_mm <= 12 && (valor_yyyy > 1926 || (valor_yyyy == 1926 && valor_mm >= 3)) && (valor_yyyy < 2026 || (valor_yyyy == 2026 && valor_mm <= 3))) {
+    if (valor_mm >= 1 &&
+        valor_mm <= 12 &&
+        (valor_yyyy > 1926 || (valor_yyyy == 1926 && valor_mm >= 3)) &&
+        (valor_yyyy < 2026 || (valor_yyyy == 2026 && valor_mm <= 3))) {
       edad = VALOR_YYYY_ACTUAL - valor_yyyy - ((VALOR_MM_ACTUAL - valor_mm) < 0);
-      if (edad < 18) {
+      if (edad < EDAD_MINIMA) {
         *rechazado = true;
         *puntaje = -1;
       } else {
@@ -142,7 +166,7 @@ void preguntar_nacimiento(int *puntaje, bool *rechazado) {
       }
       termino = true;
     } else {
-      printf("\x1b[91mLa fecha: %d/%d no es válida. Intente nuevamente\x1b[0m\n", valor_yyyy, valor_mm);
+      printf(MENSAJE_ERROR_OPCION_INVALIDA, valor_yyyy, valor_mm);
     }
   }
 }
@@ -152,22 +176,27 @@ void preguntar_nacimiento(int *puntaje, bool *rechazado) {
  * POS: Puntaje obtenido sumado/restado a la variable pasada
  */
 void preguntar_sacrificio(int *puntaje) {
+  const char MENSAJE_DE_PREGUNTA[] =
+      "\n"
+      "\x1b[93mIngrese un solo número entero entre %d y %d inclusive\x1b[0m\n"
+      "\n"
+      "¿Cuántas donas estaría dispuesto a sacrificar para el Número Uno?\n"
+      "\n";
+  const char PEDIDO_DE_ENTRADA[] = "Ingrese aquí su elección \x1b[94m(%d-%d)\x1b[0m: ";
+  const char MENSAJE_ERROR_VALOR_INVALIDA[] = "\x1b[91mEl valor: %d no es válido. Intente nuevamente\x1b[0m\n";
+
   const int MINIMA_ELECCION_VALIDA = 0;
   const int MAXIMA_ELECCION_VALIDA = 12;
 
   int eleccion = 0;
   bool termino = false;
   while (!termino) {
-    printf("\n");
-    printf("\x1b[93mIngrese un solo número entero entre %d y %d inclusive\x1b[0m\n", MINIMA_ELECCION_VALIDA, MAXIMA_ELECCION_VALIDA);
-    printf("\n");
-    printf("¿Cuántas donas estaría dispuesto a sacrificar para el Número Uno?\n");
-    printf("\n");
-    printf("Ingrese aquí su elección \x1b[94m(%d-%d)\x1b[0m: ", MINIMA_ELECCION_VALIDA, MAXIMA_ELECCION_VALIDA);
+    printf(MENSAJE_DE_PREGUNTA, MINIMA_ELECCION_VALIDA, MAXIMA_ELECCION_VALIDA);
+    printf(PEDIDO_DE_ENTRADA, MINIMA_ELECCION_VALIDA, MAXIMA_ELECCION_VALIDA);
     scanf(" %d", &eleccion);
     printf("\n");
     if (eleccion < MINIMA_ELECCION_VALIDA || eleccion > MAXIMA_ELECCION_VALIDA) {
-      printf("\x1b[91mEl valor: %d no es válido. Intente nuevamente\x1b[0m\n", eleccion);
+      printf(MENSAJE_ERROR_VALOR_INVALIDA, eleccion);
     } else if (eleccion == 0) {
       *puntaje += -100;
       termino = true;
@@ -206,6 +235,15 @@ int indice_de_resultado(int puntaje) {
 }
 
 int main() {
+  const char MENSAJE_DELIBERACION[] =
+      "\n"
+      "--------------------------------------------------\n"
+      "\n"
+      "\x1b[92mLuego de una deliberada discusión...\x1b[0m\n"
+      "\n"
+      "\x1b[93mSerás...\x1b[0m\n"
+      "\n";
+
   const char RESULTADOS[][MAX_VECTOR_RESULTADO] = {
       "\x1b[91m-RECHAZADO-\x1b[0m",
       "\x1b[93m-ASPIRANTE-\x1b[0m",
@@ -225,13 +263,7 @@ int main() {
       preguntar_sacrificio(&puntaje);
     }
   }
-  printf("\n");
-  printf("--------------------------------------------------\n");
-  printf("\n");
-  printf("\x1b[92mLuego de una deliberada discusión...\x1b[0m\n");
-  printf("\n");
-  printf("\x1b[93mSerás...\x1b[0m\n");
-  printf("\n");
+  printf(MENSAJE_DELIBERACION);
   printf("%s\n", RESULTADOS[indice_de_resultado(puntaje)]);
   return 0;
 }
