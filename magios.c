@@ -39,8 +39,8 @@ bool esta_entre(char valor_buscado, const char lista[], int tope_lista) {
 }
 
 /*
- * PRE: Tener una variable en donde se quiera almacenar el puntaje obtenido
- * POS: Puntaje obtenido sumado/restado a la variable pasada
+ * PRE: Tener una variable en donde se quiera almacenar el puntaje obtenido, y otra en donde se quiera saber si ya fue rechazado totalmente
+ * POS: Puntaje obtenido sumado/restado a la variable pasada, un bool indicando si ya fue rechazado, en este caso el puntaje sera -1
  */
 void preguntar_fundador(int *puntaje, bool *rechazado) {
   const char OPCIONES_SOLO_LETRA[MAX_VECTOR_OPCIONES_PREGUNTA_FUNDADOR] = {
@@ -147,8 +147,8 @@ void preguntar_voto_de_silencio(int *puntaje) {
 }
 
 /*
- * PRE: Tener una variable en donde se quiera almacenar el puntaje obtenido
- * POS: Puntaje obtenido sumado/restado a la variable pasada
+ * PRE: Tener una variable en donde se quiera almacenar el puntaje obtenido, y otra en donde se quiera saber si ya fue rechazado totalmente
+ * POS: Puntaje obtenido sumado/restado a la variable pasada, un bool indicando si ya fue rechazado, en este caso el puntaje sera -1
  */
 void preguntar_nacimiento(int *puntaje, bool *rechazado) {
   const char MENSAJE_DE_PREGUNTA[] =
